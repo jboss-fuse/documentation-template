@@ -2,29 +2,28 @@ This project prepares template which can be used to simplify creation of README 
 
 # Documentation template
 
-Main template file is `README-template.adoc`.
+Main template file is `README-template.adoc`, which contains text for the whole README file. 
 
-This file contains text for the whole README file. 
-
-To make it customizable by various quickstart, it uses properties:
- - `quickstart.name` name of the quickstart (e.g. spring-boot-camel-xml)
- 
- and it contains several child pages, which are included into mainn README:
- - `introduction.adoc` Contains title and brief description of the quickstart. Should be used.
- - `oc-special-configuration.adoc` In case that quickstart requires special configuration.
- - `oc-deploy.adoc` The special configuration from the previous step could need different deploy command.
- - `validation.adoc` Once quickstart is running, there could be different method to validate its state.
- - `local-validation.adoc` This method could vary for local execution.
+You can customize the final README.adoc by providing several child pages (only 1 of them is mandatory):
  - `integration-testing.adoc` In case that quickstart does not have integration test, please keep blank.
+ - `introduction.adoc` Contains title and brief description of the quickstart. **Mandatory**.
+ - `introduction-other.adoc` Some quickstarts requires a configuration of another system. This the place to provide a guide.
+ - `local-validation.adoc` Another system has to be defined also for local execution.
+ - `oc-deploy.adoc` Step with the command to start quickstart - could be different. 
+ - `oc-deploy-without-images.adoc` Command for the execution in the scenario without preinstalled images. 
+ - `oc-special-configuration.adoc` Place to define possible confguration of another system using `oc`.
+ - `validation.adoc` Validation of successful execution of the quickstart.
+ - `validation-local.adoc` Validation in local scenario could be different.
+ - `validation-see-log.adoc` Some quickstarts are validating messages in log, some are using different approach.
+ - `validation-summary.adoc` In some cases, validation contain also veryfication of different system.
+ 
+ Please start these children adoc files with a blank line. (This will make chapter separation in a result page correct.)
  
  # How to use
  
- Prepare custom child adoc files (e.g. into src/main/doc)  and define property quickstart.name:
- ```xml
-         <quickstart.name>spring-boot-camel-xml</quickstart.name>
-```
+Prepare all required adoc files (suggested location is `src/main/doc`)
  
-This template has to be added as zip dependency:
+This artifact has to be added among dependencies as a zip type:
  
  ```xml
         <dependency>
@@ -130,7 +129,7 @@ Finally, template has to be resolved into final file:
             </plugin>
 ```
 
-See usage in existing quicckstarts (e.g. https://github.com/fabric8-quickstarts/spring-boot-camel-rest-sql)
+See usage in existing quickstarts (e.g. https://github.com/fabric8-quickstarts/spring-boot-camel-rest-sql)
  
 
 

@@ -1,0 +1,4 @@
+
+. On the project's `Overview` page, navigate to the details page deployment of the `${project.artifactId}` application: `https://OPENSHIFT_IP_ADDR:8443/console/project/MY_PROJECT_NAME/browse/rc/${project.artifactId}-NUMBER_OF_DEPLOYMENT?tab=details`.
+
+. Switch to tab `Logs` and then see the messages sent by Camel.
