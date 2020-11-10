@@ -14,6 +14,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <asciidoc.plugin.version>1.0.8-RELEASE</asciidoc.plugin.version>
     </properties>
 
 
@@ -39,5 +41,82 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>generate</id>
+
+            <properties>
+                <quickstart.type>spring-boot</quickstart.type>
+            </properties>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-doc-template-to-target</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/tmp</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/main/doc</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                    <delimiters>
+                                        <delimiter>${*}</delimiter>
+                                    </delimiters>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-doc-to-target</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/tmp/${quickstart.type}</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>../${quickstart.name}/src/main/doc</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>io.whelk.asciidoc</groupId>
+                        <artifactId>asciidoc-template-maven-plugin</artifactId>
+                        <version>${asciidoc.plugin.version}</version>
+                        <configuration>
+                            <templateDirectory>${basedir}/target/tmp/${quickstart.type}</templateDirectory>
+                            <templateFile>README-template.adoc</templateFile>
+                            <outputDirectory>../${quickstart.name}</outputDirectory>
+                            <outputFile>README.adoc</outputFile>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>generate-README.adoc</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
