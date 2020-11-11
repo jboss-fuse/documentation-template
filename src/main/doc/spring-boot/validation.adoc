@@ -1,3 +1,3 @@
 
 . In your browser, navigate to the `MY_PROJECT_NAME` project in the OpenShift console.
-Wait until you can see that the pod for the `${project.artifactId}` has started up.
+Wait until you can see that the pod for the `${quickstart.name}` has started up.

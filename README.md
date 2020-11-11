@@ -130,7 +130,16 @@ Finally, template has to be resolved into final file:
 ```
 
 See usage in existing quickstarts (e.g. https://github.com/fabric8-quickstarts/spring-boot-camel-rest-sql)
+
+ # How to generate README.adoc in a quickstart
  
+ Use profile `generate` to generate README.adoc file for specific project. Example of use:
+ 
+ > mvn package -Dquickstart.name=spring-boot-camel -Pgenerate 
+
+Parameter `quickstart.path` contains path to specific project.
+Parameter `quickstart.name` contains the neme for the specific project.
+(Documentation project parent directory has to be the same as the parent of quickstart directory)
 
 
 
