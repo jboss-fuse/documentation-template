@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <asciidoc.plugin.version>1.0.8-RELEASE</asciidoc.plugin.version>
+        <asciidoc.plugin.version>2.1.0</asciidoc.plugin.version>
     </properties>
 
 
