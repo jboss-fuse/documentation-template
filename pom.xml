@@ -6,7 +6,7 @@
 
     <groupId>io.fabric8.quickstarts</groupId>
     <artifactId>documentation-template</artifactId>
-    <version>2.23.2-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>Fabric8 :: Quickstarts :: Documentation template </name>
     <description>Template for quickstarts READMEs</description>
@@ -16,11 +16,12 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
 
-        <maven.version>3.6.3</maven.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <asciidoc.plugin.version>1.0.12-RELEASE</asciidoc.plugin.version>
+        <camel.version>2.23.2.fuse-790013</camel.version>
+
+        <freemarker.plugin.version>2.3.30</freemarker.plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -28,7 +29,7 @@
             <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>tooling-parent</artifactId>
-                <version>${project.version}</version>
+                <version>${camel.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -39,100 +40,19 @@
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.30</version>
+            <version>${freemarker.plugin.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
-            <version>${maven.version}</version>
         </dependency>
 
-        <!-- dependencies to annotations -->
         <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>
             <artifactId>maven-plugin-annotations</artifactId>
-            <version>3.3</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
-
-    <profiles>
-        <profile>
-            <id>generate</id>
-
-            <properties>
-                <quickstart.type>spring-boot</quickstart.type>
-            </properties>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>copy-doc-template-to-target</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${basedir}/target/tmp</outputDirectory>
-                                    <resources>
-                                        <resource>
-                                            <directory>${basedir}/src/main/doc</directory>
-                                            <filtering>true</filtering>
-                                        </resource>
-                                    </resources>
-                                    <delimiters>
-                                        <delimiter>${*}</delimiter>
-                                    </delimiters>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>copy-doc-to-target</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${basedir}/target/tmp/${quickstart.type}</outputDirectory>
-                                    <overwrite>true</overwrite>
-                                    <resources>
-                                        <resource>
-                                            <directory>../${quickstart.name}/src/main/doc</directory>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>io.whelk.asciidoc</groupId>
-                        <artifactId>asciidoc-template-maven-plugin</artifactId>
-                        <version>${asciidoc.plugin.version}</version>
-                        <configuration>
-                            <templateDirectory>${basedir}/target/tmp/${quickstart.type}</templateDirectory>
-                            <templateFile>README-template.adoc</templateFile>
-                            <outputDirectory>../${quickstart.name}</outputDirectory>
-                            <outputFile>README.adoc</outputFile>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>generate-README.adoc</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>
